@@ -27,6 +27,14 @@ st.header("Overview")
 st.write("Here is a quick look at the dataset:")
 st.dataframe(data.head())
 
+# Check for required columns
+required_columns = ['rating', 'revenue_millions', 'year', 'genre', 'duration', 'title']
+missing_columns = [col for col in required_columns if col not in data.columns]
+
+if missing_columns:
+    st.error(f"The dataset is missing the following required columns: {', '.join(missing_columns)}")
+    st.stop()
+
 # Calculate basic statistics
 num_movies = data.shape[0]
 avg_rating = data['rating'].mean()
@@ -39,31 +47,25 @@ st.write(f"- **Average Revenue (in millions)**: ${avg_revenue:.2f}")
 # Ratings Trend Over Time
 st.header("📈 IMDb Ratings Over Time")
 
-if 'year' in data.columns and 'rating' in data.columns:
-    yearly_ratings = data.groupby('year')['rating'].mean().reset_index()
-    plt.figure(figsize=(10, 5))
-    sns.lineplot(x='year', y='rating', data=yearly_ratings, marker="o")
-    plt.title("Average IMDb Rating Over the Years")
-    plt.xlabel("Year")
-    plt.ylabel("Average Rating")
-    st.pyplot(plt)
-else:
-    st.write("Data is missing 'year' or 'rating' columns.")
+yearly_ratings = data.groupby('year')['rating'].mean().reset_index()
+plt.figure(figsize=(10, 5))
+sns.lineplot(x='year', y='rating', data=yearly_ratings, marker="o")
+plt.title("Average IMDb Rating Over the Years")
+plt.xlabel("Year")
+plt.ylabel("Average Rating")
+st.pyplot(plt)
 
 # Genre Analysis
 st.header("🎭 Movie Genres")
 
-if 'genre' in data.columns:
-    genre_counts = data['genre'].value_counts()
-    plt.figure(figsize=(10, 5))
-    sns.barplot(x=genre_counts.index, y=genre_counts.values, palette="viridis")
-    plt.title("Number of Movies by Genre")
-    plt.xlabel("Genre")
-    plt.ylabel("Number of Movies")
-    plt.xticks(rotation=45)
-    st.pyplot(plt)
-else:
-    st.write("Data is missing 'genre' column.")
+genre_counts = data['genre'].value_counts()
+plt.figure(figsize=(10, 5))
+sns.barplot(x=genre_counts.index, y=genre_counts.values, palette="viridis")
+plt.title("Number of Movies by Genre")
+plt.xlabel("Genre")
+plt.ylabel("Number of Movies")
+plt.xticks(rotation=45)
+st.pyplot(plt)
 
 # Fun Facts Section
 st.header("🎉 Fun Facts")
