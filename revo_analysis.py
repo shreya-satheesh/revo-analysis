@@ -25,15 +25,35 @@ st.dataframe(data.head())
 num_movies = data.shape[0]
 avg_rating = data['Rating'].mean()
 
-st.write(f"- **Total Movies**: {num_movies}")
+st.write(f"- **Total Number of Movies**: {num_movies}")
 st.write(f"- **Average IMDb Rating**: {avg_rating:.2f}")
 
-st.header("📈 IMDb Ratings Over Time 📈")
+st.header("📈 Graph of IMDb Ratings Over Time 📈")
 
 yearly_ratings = data.groupby('Year')['Rating'].mean().reset_index()
 plt.figure(figsize=(10, 5))
 sns.lineplot(x='Year', y='Rating', data=yearly_ratings, marker="o")
-plt.title("Average IMDb Rating Over the Years")
+plt.title("Average IMDb Rating Over Time")
 plt.xlabel("Year")
 plt.ylabel("Average Rating")
 st.pyplot(plt)
+
+st.header("🎭 Movie Genres 🎭")
+
+genre_counts = data['Genre'].value_counts()
+plt.figure(figsize=(10, 5))
+sns.barplot(x=genre_counts.index, y=genre_counts.values, palette="viridis")
+plt.title("Number of Movies In Each Genre")
+plt.xlabel("Genre")
+plt.ylabel("Movie Count")
+plt.xticks(rotation=45)
+st.pyplot(plt)
+
+st.header("🎉 Quick Fun Facts 🎉")
+
+longest_movie = data.loc[data['Duration (min)'].idxmax()]
+shortest_movie = data.loc[data['Duration (min)'].idxmin()]
+
+st.write(f"- **The Longest Movie**: {longest_movie['Title']} ({longest_movie['Duration (min)']} minutes)")
+st.write(f"- **The Shortest Movie**: {shortest_movie['Title']} ({shortest_movie['Duration (min)']} minutes)")
+
