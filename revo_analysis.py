@@ -28,21 +28,9 @@ avg_rating = data['Rating'].mean()
 st.write(f"- **Total Number of Movies**: {num_movies}")
 st.write(f"- **Average IMDb Rating**: {avg_rating:.2f}")
 
-st.header("📈 Graph of IMDb Ratings Over Time 📈")
-
-yearly_ratings = data.groupby('Year')['Rating'].mean().reset_index()
-plt.figure(figsize=(10, 5))
-sns.lineplot(x='Year', y='Rating', data=yearly_ratings, marker="o")
-plt.title("Average IMDb Rating Over Time")
-plt.xlabel("Year")
-plt.ylabel("Average Rating")
-st.pyplot(plt)
-
 st.header("🎭 Movie Genres 🎭")
 
 top_genres = data['Genre'].value_counts().head(5)
-
-st.write(f"- **Here are the top 5 movie genres**: {', '.join(top_genres.index)}")
 
 plt.figure(figsize=(10, 5))
 sns.barplot(x=top_genres.index, y=top_genres.values, palette="viridis")
@@ -52,7 +40,7 @@ plt.ylabel("Number of Movies")
 plt.xticks(rotation=45)
 st.pyplot(plt)
 
-st.header("🎉 Quick Fun Facts 🎉")
+st.header("🎉 Various Facts 🎉")
 
 longest_movie = data.loc[data['Duration (min)'].idxmax()]
 shortest_movie = data.loc[data['Duration (min)'].idxmin()]
@@ -66,7 +54,7 @@ worst_rated_movie = data.loc[data['Rating'].idxmin()]
 st.write(f"- **Best Rated Movie**: {best_rated_movie['Title']} ({best_rated_movie['Rating']} rating)")
 st.write(f"- **Worst Rated Movie**: {worst_rated_movie['Title']} ({worst_rated_movie['Rating']} rating)")
 
-st.header("📈 Movie Ratings Over Time")
+st.header("📈 Movie Ratings Over Time 📈")
 yearly_ratings = data.groupby('Year')['Rating'].mean().reset_index()
 
 plt.figure(figsize=(10, 5))
@@ -75,4 +63,26 @@ plt.title("Average Movie Ratings Over the Years")
 plt.xlabel("Year")
 plt.ylabel("Average Rating")
 st.pyplot(plt)
+
+st.header("⏳ Distribution of Movie Durations ⏳")
+plt.figure(figsize=(10, 5))
+sns.histplot(data['Duration (min)'], kde=True, color='green')
+plt.title("Distribution of Movie Durations")
+plt.xlabel("Duration (in minutes)")
+plt.ylabel("Frequency")
+st.pyplot(plt)
+
+
+st.header("📊 Do Votes = Higher Rating? 📊")
+plt.figure(figsize=(10, 5))
+sns.scatterplot(x='Votes', y='Rating', data=data)
+plt.title("IMDb Rating vs. Number of Votes")
+plt.xlabel("Number of Votes")
+plt.ylabel("IMDb Rating")
+st.pyplot(plt)
+
+st.header("🏆 Top 10 Movies by Review Count 🏆")
+top_reviewed_movies = data.nlargest(10, 'Review Count')
+st.write(top_reviewed_movies[['Title', 'Review Count', 'Rating']])
+
 
