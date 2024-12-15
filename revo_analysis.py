@@ -22,25 +22,11 @@ st.header("Overview")
 st.write("Let's take a quick look at the dataset:")
 st.dataframe(data.head())
 
-num_movies = data.shape[0]
-avg_rating = data['Rating'].mean()
+st.header("🎉 Various Facts 🎉")
 
 st.write(f"- **Total Number of Movies**: {num_movies}")
 st.write(f"- **Average IMDb Rating**: {avg_rating:.2f}")
 
-st.header("🎭 Movie Genres 🎭")
-
-top_genres = data['Genre'].value_counts().head(5)
-
-plt.figure(figsize=(10, 5))
-sns.barplot(x=top_genres.index, y=top_genres.values, palette="viridis")
-plt.title("Number of Movies in the Top 5 Most Popular Genres")
-plt.xlabel("Genre")
-plt.ylabel("Number of Movies")
-plt.xticks(rotation=45)
-st.pyplot(plt)
-
-st.header("🎉 Various Facts 🎉")
 
 longest_movie = data.loc[data['Duration (min)'].idxmax()]
 shortest_movie = data.loc[data['Duration (min)'].idxmin()]
@@ -53,6 +39,23 @@ worst_rated_movie = data.loc[data['Rating'].idxmin()]
 
 st.write(f"- **Best Rated Movie**: {best_rated_movie['Title']} ({best_rated_movie['Rating']} rating)")
 st.write(f"- **Worst Rated Movie**: {worst_rated_movie['Title']} ({worst_rated_movie['Rating']} rating)")
+
+num_movies = data.shape[0]
+avg_rating = data['Rating'].mean()
+
+st.header("Some Visualizations: ")
+
+st.header("🎭 Movie Genres 🎭")
+
+top_genres = data['Genre'].value_counts().head(5)
+
+plt.figure(figsize=(10, 5))
+sns.barplot(x=top_genres.index, y=top_genres.values, palette="viridis")
+plt.title("Number of Movies in the Top 5 Most Popular Genres")
+plt.xlabel("Genre")
+plt.ylabel("Number of Movies")
+plt.xticks(rotation=45)
+st.pyplot(plt)
 
 st.header("📈 Movie Ratings Over Time 📈")
 yearly_ratings = data.groupby('Year')['Rating'].mean().reset_index()
