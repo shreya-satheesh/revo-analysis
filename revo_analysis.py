@@ -24,8 +24,13 @@ st.dataframe(data.head())
 
 st.header("🎉 Various Facts 🎉")
 
+num_movies = data.shape[0]
+avg_rating = data['rating'].mean()
+avg_revenue = data['revenue_millions'].mean()
+
 st.write(f"- **Total Number of Movies**: {num_movies}")
 st.write(f"- **Average IMDb Rating**: {avg_rating:.2f}")
+st.write(f"- **Average Revenue (in millions)**: ${avg_revenue:.2f}")
 
 
 longest_movie = data.loc[data['Duration (min)'].idxmax()]
