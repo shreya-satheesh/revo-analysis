@@ -86,8 +86,13 @@ plt.xlabel("Number of Votes")
 plt.ylabel("IMDb Rating")
 st.pyplot(plt)
 
+
+data['Review Count'] = pd.to_numeric(data['Review Count'], errors='coerce') 
+data = data.dropna(subset=['Review Count'])
+
 st.header("🏆 Top 10 Movies by Review Count 🏆")
 top_reviewed_movies = data.nlargest(10, 'Review Count')
 st.write(top_reviewed_movies[['Title', 'Review Count', 'Rating']])
+
 
 
