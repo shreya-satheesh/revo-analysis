@@ -110,6 +110,12 @@ data['Review Count'] = pd.to_numeric(data['Review Count'], errors='coerce')
 data = data.dropna(subset=['Review Count'])
 
 st.header("🏆 Top 10 Movies by Review Count 🏆")
+
+st.write("""
+    **Top 10 Movies by Review Count:**
+    This section displays the top 10 movies that have received the most reviews on IMDb. These movies typically have a large audience and are more frequently discussed by viewers. By analyzing the review count, we can gain insights into the popularity and engagement of these films. The higher the review count, the more opinions and ratings have been shared, making these movies stand out in terms of audience interaction.
+""")
+
 top_reviewed_movies = data.nlargest(10, 'Review Count')
 st.write(top_reviewed_movies[['Title', 'Review Count', 'Rating']])
 
