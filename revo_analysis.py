@@ -42,7 +42,7 @@ st.header("🎭 Movie Genres 🎭")
 
 top_genres = data['Genre'].value_counts().head(5)
 
-st.write(f"- **Here are the top 5 movie genres**:{top_genres}")
+st.write(f"- **Here are the top 5 movie genres**:{top_genres.column('Genre'}")
 
 plt.figure(figsize=(10, 5))
 sns.barplot(x=top_genres.index, y=top_genres.values, palette="viridis")
