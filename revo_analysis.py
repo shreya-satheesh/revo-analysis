@@ -25,7 +25,7 @@ st.dataframe(data.head())
 st.header("🎉 Various Facts 🎉")
 
 num_movies = data.shape[0]
-avg_rating = data['rating'].mean()
+avg_rating = data['Rating'].mean()
 avg_revenue = data['revenue_millions'].mean()
 
 st.write(f"- **Total Number of Movies**: {num_movies}")
