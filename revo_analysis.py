@@ -49,6 +49,11 @@ st.header("Some Visualizations: ")
 
 st.header("🎭 Movie Genres 🎭")
 
+st.write("""
+**Movie Genres**: This bar chart shows the distribution of movies across the five most popular genres in the dataset.
+It highlights which genres dominate Nicolas Cage’s filmography, providing insight into his most common roles and the genre trends over time.
+""")
+    
 top_genres = data['Genre'].value_counts().head(5)
 
 plt.figure(figsize=(10, 5))
@@ -60,6 +65,11 @@ plt.xticks(rotation=45)
 st.pyplot(plt)
 
 st.header("📈 Movie Ratings Over Time 📈")
+
+st.write("""
+**Movie Ratings Over Time**: This line plot demonstrates how Nicolas Cage's movies have been rated over the years.
+It reflects whether his performances have improved or declined in the eyes of audiences and critics, with some fluctuations likely linked to specific movies or periods of his career.
+""")
 yearly_ratings = data.groupby('Year')['Rating'].mean().reset_index()
 
 plt.figure(figsize=(10, 5))
@@ -70,6 +80,11 @@ plt.ylabel("Average Rating")
 st.pyplot(plt)
 
 st.header("⏳ Distribution of Movie Durations ⏳")
+st.write("""
+**Movie Durations**: This histogram showcases the distribution of movie durations.
+It helps us understand the typical length of Nicolas Cage's films and whether there is a general trend towards shorter or longer movies in his filmography.
+It also highlights outliers like particularly long or short films.
+""")
 plt.figure(figsize=(10, 5))
 sns.histplot(data['Duration (min)'], kde=True, color='green')
 plt.title("Distribution of Movie Durations")
@@ -79,6 +94,10 @@ st.pyplot(plt)
 
 
 st.header("📊 Do Votes = Higher Rating? 📊")
+st.write("""
+**Do Votes = Higher Rating?**: This scatter plot investigates the relationship between the number of votes and IMDb rating for Nicolas Cage's films.
+It shows whether movies with more votes tend to have higher ratings or if there's no clear correlation between the two.
+""")
 plt.figure(figsize=(10, 5))
 sns.scatterplot(x='Votes', y='Rating', data=data)
 plt.title("IMDb Rating vs. Number of Votes")
