@@ -42,7 +42,7 @@ st.header("🎭 Movie Genres 🎭")
 
 top_genres = data['Genre'].value_counts().head(5)
 
-st.write(f"- **Here are the top 5 movie genres**:{top_genres.column('Genre'}")
+st.write(f"- **Here are the top 5 movie genres**: {', '.join(top_genres.index)}")
 
 plt.figure(figsize=(10, 5))
 sns.barplot(x=top_genres.index, y=top_genres.values, palette="viridis")
@@ -59,4 +59,20 @@ shortest_movie = data.loc[data['Duration (min)'].idxmin()]
 
 st.write(f"- **The Longest Movie**: {longest_movie['Title']} ({longest_movie['Duration (min)']} minutes)")
 st.write(f"- **The Shortest Movie**: {shortest_movie['Title']} ({shortest_movie['Duration (min)']} minutes)")
+
+best_rated_movie = data.loc[data['Rating'].idxmax()]
+worst_rated_movie = data.loc[data['Rating'].idxmin()]
+
+st.write(f"- **Best Rated Movie**: {best_rated_movie['Title']} ({best_rated_movie['Rating']} rating)")
+st.write(f"- **Worst Rated Movie**: {worst_rated_movie['Title']} ({worst_rated_movie['Rating']} rating)")
+
+st.header("📈 Movie Ratings Over Time")
+yearly_ratings = data.groupby('Year')['Rating'].mean().reset_index()
+
+plt.figure(figsize=(10, 5))
+sns.lineplot(x='Year', y='Rating', data=yearly_ratings, marker="o", color='b')
+plt.title("Average Movie Ratings Over the Years")
+plt.xlabel("Year")
+plt.ylabel("Average Rating")
+st.pyplot(plt)
 
