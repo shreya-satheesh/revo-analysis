@@ -40,12 +40,15 @@ st.pyplot(plt)
 
 st.header("🎭 Movie Genres 🎭")
 
-genre_counts = data['Genre'].value_counts()
+top_genres = data['Genre'].value_counts().head(5)
+
+st.write(f"- **Here are the top 5 movie genres**:{top_genres}")
+
 plt.figure(figsize=(10, 5))
-sns.barplot(x=genre_counts.index, y=genre_counts.values, palette="viridis")
-plt.title("Number of Movies In Each Genre")
+sns.barplot(x=top_genres.index, y=top_genres.values, palette="viridis")
+plt.title("Number of Movies in the Top 5 Most Popular Genres")
 plt.xlabel("Genre")
-plt.ylabel("Movie Count")
+plt.ylabel("Number of Movies")
 plt.xticks(rotation=45)
 st.pyplot(plt)
 
