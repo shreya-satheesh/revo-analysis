@@ -5,12 +5,17 @@ import seaborn as sns
 
 # Load the dataset
 @st.cache_data
-def load_data():
-    url = "https://prod-files-secure.s3.us-west-2.amazonaws.com/e2b72823-32db-47e8-9e10-1a4e9b1622af/18159b10-0722-4354-bcac-6d5ca480ad83/imdb.csv.zip"
-    data = pd.read_csv(url, compression='zip')
+def load_data(file):
+    data = pd.read_csv(file, compression='zip')
     return data
 
-data = load_data()
+# Add a file uploader
+uploaded_file = st.file_uploader("Upload IMDb dataset (zip format):", type=["zip"])
+if uploaded_file:
+    data = load_data(uploaded_file)
+else:
+    st.warning("Please upload a dataset file to proceed.")
+    st.stop()
 
 # App title
 st.title("🎥 Fun Facts About Nicolas Cage's Filmography")
